@@ -11,7 +11,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Built-in body parser
+app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => res.send("Server running"));
@@ -24,5 +24,10 @@ DbConnection.once("open", () => {
   console.log("Database connected successfully");
 });
 
-// Export the app for Vercel (this is the key change)
+// Start the server (Important for Vercel)
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 export default app;
