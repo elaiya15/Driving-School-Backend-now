@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 
 import bodyParser from "body-parser";
-import connectDB from "./config/db.js";
+import DbConnection from "./config/db.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
 dotenv.config();
@@ -22,9 +22,11 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/user", adminRoutes);
 app.use("/api/auth", adminRoutes);
 
-// Database Connection
-connectDB();
-
 // Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  DbConnection.once("open", () => {
+    console.log("Database connected successfully");
+  });
+});
