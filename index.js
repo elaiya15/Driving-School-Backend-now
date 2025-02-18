@@ -23,10 +23,16 @@ app.use("/api/user", adminRoutes);
 app.use("/api/auth", adminRoutes);
 
 // Start Server
+// const PORT = process.env.PORT || 5000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${PORT}`);
+//   DbConnection.once("open", () => {
+//     console.log("Database connected successfully");
+//   });
+// });
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+
+DbConnection.once("open", () => {
   console.log(`Server running on port ${PORT}`);
-  DbConnection.once("open", () => {
-    console.log("Database connected successfully");
-  });
+  console.log("Database connected successfully");
 });
